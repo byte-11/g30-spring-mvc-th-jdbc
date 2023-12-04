@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Panel</title>
+    <link href="/static/css/main.css" rel="stylesheet">
+</head>
+<body>
+<br>
+<!-- /admin/users?isAdmin=true&id=10 -->
+<button><a th:href="@{/admin/users(status=${status != null ? !status : true})}">Change-Admin-State</a></button>
+<br>
+<div th:if="${status == true}">
+  <table>
+    <thead>
+    <th>#</th>
+    <th>ID</th>
+    <th>FIRST_NAME</th>
+    <th>LAST_NAME</th>
+    <th>AGE</th>
+    </thead>
+    <tbody>
+    <tr th:each="user, stat : ${users}">
+      <td th:text="${stat.count}"></td>
+      <td th:text="${user.id}"></td>
+      <td th:text="${user.firstName}"></td>
+      <td th:text="${user.lastName}"></td>
+      <td th:text="${user.age}"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+</body>
+</html>
