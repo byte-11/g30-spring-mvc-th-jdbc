@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+          p:driverClassName="org.postgresql.Driver"
+          p:url="jdbc:postgresql://localhost:5432/db_test"
+          p:username="postgres"
+          p:password="1596psql"
+    />
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate"
+          c:dataSource-ref="dataSource"/>
+
+    <bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate"
+          c:dataSource-ref="dataSource"
+    />
+
+    <bean id="simpleJdbcInsert" class="org.springframework.jdbc.core.simple.SimpleJdbcInsert"
+          c:jdbcTemplate-ref="jdbcTemplate"
+    />
+
+    <bean id="simpleJdbcCall" class="org.springframework.jdbc.core.simple.SimpleJdbcCall"
+          c:jdbcTemplate-ref="jdbcTemplate"
+    />
+
+    <bean id="userRepository" class="uz.pdp.repository.UserRepository"
+          c:jdbcTemplate-ref="jdbcTemplate"
+          c:namedParameterJdbcTemplate-ref="namedParameterJdbcTemplate"
+          c:simpleJdbcInsert-ref="simpleJdbcInsert"
+          c:simpleJdbcCall-ref="simpleJdbcCall"
+    />
+</beans>

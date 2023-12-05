@@ -13,7 +13,7 @@ public class HomeController {
         var modelAndView = new ModelAndView();
         modelAndView.setViewName("home");
         modelAndView.addObject("user",
-                new User(1, "John", "Doe", 22));
+                new User(1L, "John", "Doe", 22));
         return modelAndView;
     }
 }

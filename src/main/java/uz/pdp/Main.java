@@ -1,17 +1,22 @@
 package uz.pdp;
 
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import uz.pdp.config.ApplicationConfiguration;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import uz.pdp.domain.User;
 import uz.pdp.repository.UserRepository;
 
 public class Main {
     public static void main(String[] args) {
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(ApplicationConfiguration.class);
-        UserRepository userRepository = context.getBean(UserRepository.class);
+        ClassPathXmlApplicationContext context =
+                new ClassPathXmlApplicationContext("classpath:ioc-config.xml");
 
-//        userRepository.save(User.builder().firstName("John").lastName("Doe").age(20).build());
-//        userRepository.saveWithParams(User.builder().firstName("Anna").lastName("Bell").age(20).build());
-//        System.out.println(userRepository.get(3));
-        System.out.println(userRepository.getByFirstName("John"));
+        UserRepository userRepository = (UserRepository) context.getBean("userRepository");
+        User user = User.builder()
+                .firstname("Qodirali 14 PRO MAX")
+                .lastname("Kimsanali")
+                .age(88)
+                .build();
+        userRepository.saveWithSimpleJdbc(user);
+//        userRepository.delete(8);
+//        System.out.println(userRepository.getAll(80));
     }
 }
